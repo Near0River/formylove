@@ -162,6 +162,12 @@
                         <span>1. My Baby's Gift Quiz 🧩</span>
                         <span class="gift-icon">➔</span>
                     </a>
+
+                    <!-- REGALO 2: REASONS WHY I LOVE YOU -->
+                    <a href="reasons.html" class="btn-gift">
+                        <span>2. Reasons Why I Love You 💕</span>
+                        <span class="gift-icon">➔</span>
+                    </a>
                 </div>
             </div>
 
@@ -172,7 +178,6 @@
         // "boo" codificato in Base64
         const SECRET_BASE64 = "Ym9v";
 
-        // Mantiene lo sblocco per le visite successive
         if (localStorage.getItem("gift_unlocked") === "true") {
             showHome();
         }
@@ -180,7 +185,6 @@
         function checkPassword() {
             const inputVal = document.getElementById("passInput").value.trim().toLowerCase();
             
-            // Convertiamo l'input dell'utente in Base64 e lo confrontiamo
             if (btoa(inputVal) === SECRET_BASE64) {
                 localStorage.setItem("gift_unlocked", "true");
                 showHome();
