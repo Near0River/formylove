@@ -169,27 +169,19 @@
     </div>
 
     <script>
-        // HASH SHA-256 ESATTO PER LA PAROLA "boo"
-        const SECRET_HASH = "00609a0f3d4d80e72251a2d67713437146e273eb8b2f913d7894a7337a6cb32d";
+        // "boo" codificato in Base64
+        const SECRET_BASE64 = "Ym9v";
 
-        // Ripristina l'accesso se sbloccato in precedenza
+        // Mantiene lo sblocco per le visite successive
         if (localStorage.getItem("gift_unlocked") === "true") {
             showHome();
         }
 
-        async function hashText(text) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(text);
-            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-            const hashArray = Array.from(new Uint8Array(hashBuffer));
-            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        async function checkPassword() {
+        function checkPassword() {
             const inputVal = document.getElementById("passInput").value.trim().toLowerCase();
-            const inputHash = await hashText(inputVal);
-
-            if (inputHash === SECRET_HASH) {
+            
+            // Convertiamo l'input dell'utente in Base64 e lo confrontiamo
+            if (btoa(inputVal) === SECRET_BASE64) {
                 localStorage.setItem("gift_unlocked", "true");
                 showHome();
             } else {
