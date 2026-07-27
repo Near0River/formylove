@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gifts For My Sweetheart 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e3f2fd 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #0d1b2a;
+        }
+
+        .card-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            width: 100%;
+            padding: 4px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #a8e6cf, #f8bbd0, #1b263b);
+            box-shadow: 0 15px 35px rgba(13, 27, 42, 0.15);
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.5rem;
+            color: #0d1b2a;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: #3d2314;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .gifts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .btn-gift {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #a8e6cf;
+            border: 2px solid #2e7d32;
+            color: #0d1b2a;
+            padding: 18px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 18px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.15);
+        }
+
+        .btn-gift:hover {
+            background: #3d2314;
+            color: #ffffff;
+            border-color: #3d2314;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(61, 35, 20, 0.25);
+        }
+
+        .gift-icon {
+            font-size: 1.4rem;
+        }
+
+        /* STILI PER LA SCHERMATA DI PASSWORD */
+        .open-input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.05rem;
+            font-family: 'Poppins', sans-serif;
+            border: 2px solid #2e7d32;
+            border-radius: 16px;
+            outline: none;
+            background: #fcfcfc;
+            color: #0d1b2a;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .open-input:focus {
+            border-color: #3d2314;
+            background: #ffffff;
+        }
+
+        .btn-submit {
+            background: #3d2314;
+            color: #ffffff;
+            border: none;
+            padding: 16px 22px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .error-msg {
+            color: #c62828;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="card-wrapper">
+        <div class="card">
+            
+            <!-- SCHERMATA DI BLOCCO PASSWORD -->
+            <div id="lockView">
+                <h1>Unlock My Heart 🔒</h1>
+                <p class="subtitle">What was my first favorite nickname?</p>
+                <input type="password" id="passInput" class="open-input" placeholder="Type your answer here..." onkeypress="handleKeyPress(event)">
+                <button type="button" class="btn-submit" onclick="checkPassword()">Unlock ❤️</button>
+                <div id="errorMsg" class="error-msg hidden">Wrong answer, my love! Try again... 🥺</div>
+            </div>
+
+            <!-- CONTENUTO HOMEPAGE (NASCOSTO DI DEFAULT) -->
+            <div id="homeContent" class="hidden">
+                <h1>Special Gifts 💌</h1>
+                <p class="subtitle">A little corner dedicated to you, my love ❤️</p>
+
+                <div class="gifts-grid">
+                    <!-- REGALO 1: QUIZ -->
+                    <a href="quiz.html" class="btn-gift">
+                        <span>1. My Baby's Gift Quiz 🧩</span>
+                        <span class="gift-icon">➔</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // HASH SHA-256 della parola "boo" (in minuscolo)
+        const SECRET_HASH = "9280d075217462061245b0a79051834208a090b84f938d21c455822b3b7e7195";
+
+        // Controlla se è già stato sbloccato in precedenza
+        if (localStorage.getItem("gift_unlocked") === "true") {
+            showHome();
+        }
+
+        // Funzione per trasformare il testo in HASH SHA-256
+        async function hashText(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function checkPassword() {
+            const inputVal = document.getElementById("passInput").value.trim().toLowerCase();
+            const inputHash = await hashText(inputVal);
+
+            if (inputHash === SECRET_HASH) {
+                localStorage.setItem("gift_unlocked", "true");
+                showHome();
+            } else {
+                document.getElementById("errorMsg").classList.remove("hidden");
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                checkPassword();
+            }
+        }
+
+        function showHome() {
+            document.getElementById("lockView").classList.add("hidden");
+            document.getElementById("homeContent").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
