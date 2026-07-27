@@ -89,7 +89,6 @@
             font-size: 1.4rem;
         }
 
-        /* STILI PER LA SCHERMATA DI PASSWORD */
         .open-input {
             width: 100%;
             padding: 16px 20px;
@@ -152,7 +151,7 @@
                 <div id="errorMsg" class="error-msg hidden">Wrong answer, my love! Try again... 🥺</div>
             </div>
 
-            <!-- CONTENUTO HOMEPAGE (NASCOSTO DI DEFAULT) -->
+            <!-- CONTENUTO HOMEPAGE -->
             <div id="homeContent" class="hidden">
                 <h1>Special Gifts 💌</h1>
                 <p class="subtitle">A little corner dedicated to you, my love ❤️</p>
@@ -170,15 +169,14 @@
     </div>
 
     <script>
-        // HASH SHA-256 della parola "boo" (in minuscolo)
-        const SECRET_HASH = "9280d075217462061245b0a79051834208a090b84f938d21c455822b3b7e7195";
+        // HASH SHA-256 ESATTO PER LA PAROLA "boo"
+        const SECRET_HASH = "00609a0f3d4d80e72251a2d67713437146e273eb8b2f913d7894a7337a6cb32d";
 
-        // Controlla se è già stato sbloccato in precedenza
+        // Ripristina l'accesso se sbloccato in precedenza
         if (localStorage.getItem("gift_unlocked") === "true") {
             showHome();
         }
 
-        // Funzione per trasformare il testo in HASH SHA-256
         async function hashText(text) {
             const encoder = new TextEncoder();
             const data = encoder.encode(text);
