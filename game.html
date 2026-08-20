@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fly to my heart ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e3f2fd 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #0d1b2a;
+        }
+
+        .card-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 500px;
+            width: 100%;
+            padding: 4px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #a8e6cf, #f8bbd0, #1b263b);
+            box-shadow: 0 15px 35px rgba(13, 27, 42, 0.15);
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 30px 20px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 3.2rem;
+            color: #0d1b2a;
+            margin-bottom: 8px;
+            line-height: 1.1;
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: #3d2314;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto 20px auto;
+        }
+
+        canvas {
+            background: linear-gradient(to bottom, #e3f2fd, #fce4ec);
+            border: 3px solid #a8e6cf;
+            border-radius: 16px;
+            display: block;
+            width: 100%;
+            height: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+        }
+
+        .btn-action {
+            background: #3d2314;
+            color: #ffffff;
+            border: none;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 4px 10px rgba(61, 35, 20, 0.15);
+        }
+
+        .btn-action:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(61, 35, 20, 0.25);
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: #3d2314;
+            color: #ffffff;
+            padding: 14px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(61, 35, 20, 0.15);
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .letter-box {
+            background: #fff0f5;
+            border: 2px dashed #f8bbd0;
+            border-radius: 18px;
+            padding: 25px 20px;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #0d1b2a;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.02);
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.dropbox.com/scl/fi/yvhgbuy0u9pqbrtetryhd/Honeybee.mp3?rlkey=dhp85sg50x8snsyq8knza07hc&dl=1" type="audio/mpeg">
+    </audio>
+
+    <div class="card-wrapper">
+        <div class="card">
+            
+            <div id="gameView">
+                <h1>Fly to my heart ❤️</h1>
+                <p class="subtitle" id="gameInstructions">Fly to my heart baby! 🩷</p>
+                
+                <div class="game-container">
+                    <canvas id="birdCanvas" width="320" height="400"></canvas>
+                </div>
+
+                <button type="button" id="startBtn" class="btn-action" onclick="startGame()">Start ❤️</button>
+            </div>
+
+            <div id="letterView" class="hidden">
+                <h1>For You, My Love 💌</h1>
+                <p class="subtitle">You reached my heart!</p>
+                
+                <div class="letter-box">Hello my sweet baby, I hope you had fun with this little game (IT WAS SO FUCKING DIFFICULT TO MAKE I HAD TO CHECK TUTORIALS). Anyway, we've now been a couple for 4 whole weeks and I really wouldn't wanna be with anyone else but you my honey. Being with you feels like being surrounded by honey and sugar, it's just so sweet and lovely and you really make me so happy &lt;3. I'm just so glad you found me, I'm so happy you searched for me, and yes I do regret everything I did, so much. I know I wasn't able to fix things with lay or Kio, but I'm not as worried about it as I used to be, because I know it all led me to being your boyfriend, and that's the best thing that ever happened to me. I know many people are against us dating, but the only people I want an opinion from are you since you're my sweet girlfriend, and lala as my best friend since she's always advised me when she didn't like my partners, but she loves you so much and that makes me so happy because I really think you're the right one for me. I just hope you feel the same way, because you're the only wanna that ever gave me that feeling in my chest, and the only one I ever trusted so much to even give you my own account. I really want us to stay together forever and I'll try my best to make you as happy as possible because you're my sweet baby and you deserve the best ever. I just hope you'll never stop loving me, because I know you're the only person I wanna be with. I love you so much my sweet baby, I hope you enjoyed this silly little gift, and I hope you'll enjoy the next ones too. You're the best girlfriend I could've ever wished for, thanks for making my days brighter my lovely princess &lt;3. You're the best thing that ever happened to me and I don't ever wanna lose you my sweet angel. I can't wait for our monthsary and I really hope we'll be able to do something special together, I love you so much my sweet happiness, like more than you could ever imagine, I love you so much &lt;3</div>
+            </div>
+
+            <!-- BOTTONE BACK TO GIFTS -->
+            <div>
+                <a href="index.html" class="btn-back">⬅️ Back to Gifts</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("birdCanvas");
+        const ctx = canvas.getContext("2d");
+        const startBtn = document.getElementById("startBtn");
+        const gameInstructions = document.getElementById("gameInstructions");
+        const bgMusic = document.getElementById("bgMusic");
+
+        let birdX = 50;
+        let birdY = 150;
+        let birdSize = 12;
+        let gravity = 0.35;
+        let velocity = 0;
+        let jump = -6.5;
+        let score = 0;
+        const targetScore = 10;
+        
+        let deathCount = 0;
+        let pipeGap = 110;
+        
+        let pipes = [];
+        let pipeWidth = 45;
+        let frameCount = 0;
+        let isGameRunning = false;
+        let gameOver = false;
+        let totalPipesCreated = 0;
+
+        function resetGame() {
+            birdY = 150;
+            velocity = 0;
+            score = 0;
+            pipes = [];
+            frameCount = 0;
+            gameOver = false;
+            totalPipesCreated = 0;
+
+            if (deathCount > 10) {
+                pipeGap = 170;
+            } else {
+                pipeGap = 110;
+            }
+        }
+
+        function startGame() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(() => {});
+            }
+
+            resetGame();
+            isGameRunning = true;
+            startBtn.classList.add("hidden");
+            gameInstructions.innerText = "Fly to my heart baby! 🩷";
+            requestAnimationFrame(updateGame);
+        }
+
+        function flap() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(() => {});
+            }
+
+            if (!isGameRunning && !gameOver) {
+                startGame();
+            } else if (isGameRunning) {
+                velocity = jump;
+            } else if (gameOver) {
+                startGame();
+            }
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.code === "Space") {
+                e.preventDefault();
+                flap();
+            }
+        });
+
+        canvas.addEventListener("click", (e) => {
+            e.preventDefault();
+            flap();
+        });
+
+        function createPipe() {
+            let minHeight = 30;
+            let maxHeight = canvas.height - pipeGap - minHeight;
+            let topHeight = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+            totalPipesCreated++;
+            
+            pipes.push({
+                x: canvas.width,
+                top: topHeight,
+                bottom: canvas.height - topHeight - pipeGap,
+                passed: false,
+                isLast: totalPipesCreated === targetScore
+            });
+        }
+
+        function drawBird() {
+            ctx.fillStyle = "#f8bbd0";
+            ctx.strokeStyle = "#3d2314";
+            ctx.lineWidth = 2;
+
+            ctx.beginPath();
+            ctx.arc(birdX, birdY, birdSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(birdX - 3, birdY + 1, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = "#0d1b2a";
+            ctx.beginPath();
+            ctx.arc(birdX + 5, birdY - 3, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawHeart(x, y, size) {
+            ctx.save();
+            ctx.fillStyle = "#e63946";
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.bezierCurveTo(x - size / 2, y - size / 2, x - size, y + size / 3, x, y + size);
+            ctx.bezierCurveTo(x + size, y + size / 3, x + size / 2, y - size / 2, x, y);
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function drawPipes() {
+            ctx.fillStyle = "#a8e6cf";
+            ctx.strokeStyle = "#2e7d32";
+            ctx.lineWidth = 2;
+
+            pipes.forEach(pipe => {
+                ctx.fillRect(pipe.x, 0, pipeWidth, pipe.top);
+                ctx.strokeRect(pipe.x, 0, pipeWidth, pipe.top);
+
+                ctx.fillRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom);
+                ctx.strokeRect(pipe.x, canvas.height - pipe.bottom, pipeWidth, pipe.bottom);
+
+                if (pipe.isLast) {
+                    let gapCenterY = pipe.top + (canvas.height - pipe.top - pipe.bottom) / 2;
+                    let gapCenterX = pipe.x + pipeWidth / 2;
+                    drawHeart(gapCenterX, gapCenterY - 20, 32);
+                }
+            });
+        }
+
+        function drawHelpText() {
+            if (deathCount > 10) {
+                ctx.save();
+                ctx.fillStyle = "rgba(61, 35, 20, 0.4)";
+                ctx.font = "italic bold 13px 'Poppins', sans-serif";
+                ctx.textAlign = "center";
+                ctx.fillText("Omg baby you're so bad at this...", canvas.width / 2, canvas.height / 2 - 10);
+                ctx.fillText("See now I'm helping you 😭", canvas.width / 2, canvas.height / 2 + 12);
+                ctx.restore();
+            }
+        }
+
+        function updateGame() {
+            if (!isGameRunning) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            drawHelpText();
+
+            velocity += gravity;
+            birdY += velocity;
+
+            if (frameCount % 90 === 0 && totalPipesCreated < targetScore) {
+                createPipe();
+            }
+            frameCount++;
+
+            for (let i = 0; i < pipes.length; i++) {
+                pipes[i].x -= 2;
+
+                if (!pipes[i].passed && pipes[i].x + pipeWidth < birdX) {
+                    pipes[i].passed = true;
+                    score++;
+
+                    if (score >= targetScore) {
+                        winGame();
+                        return;
+                    }
+                }
+
+                if (
+                    birdX + birdSize > pipes[i].x &&
+                    birdX - birdSize < pipes[i].x + pipeWidth &&
+                    (birdY - birdSize < pipes[i].top || birdY + birdSize > canvas.height - pipes[i].bottom)
+                ) {
+                    endGame();
+                    return;
+                }
+            }
+
+            pipes = pipes.filter(pipe => pipe.x + pipeWidth > 0);
+
+            if (birdY + birdSize >= canvas.height || birdY - birdSize <= 0) {
+                endGame();
+                return;
+            }
+
+            drawPipes();
+            drawBird();
+
+            ctx.fillStyle = "#0d1b2a";
+            ctx.font = "bold 18px 'Poppins', sans-serif";
+            ctx.textAlign = "left";
+            ctx.fillText(`Score: ${score} / ${targetScore}`, 15, 30);
+
+            requestAnimationFrame(updateGame);
+        }
+
+        function endGame() {
+            isGameRunning = false;
+            gameOver = true;
+            deathCount++;
+            
+            ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#0d1b2a";
+            ctx.font = "bold 18px 'Poppins', sans-serif";
+            ctx.textAlign = "center";
+            ctx.fillText("Try again my sweet baby!", canvas.width / 2, canvas.height / 2 - 10);
+            
+            ctx.textAlign = "left";
+
+            startBtn.innerText = "Try Again 🔄";
+            startBtn.classList.remove("hidden");
+        }
+
+        function winGame() {
+            isGameRunning = false;
+            document.getElementById("gameView").classList.add("hidden");
+            document.getElementById("letterView").classList.remove("hidden");
+        }
+
+        drawBird();
+    </script>
+</body>
+</html>
